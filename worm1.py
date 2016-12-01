@@ -16,7 +16,11 @@ while queue:
     visited |={url}
     print('已经抓取' + str(cnt) + '   正在抓取 <---  ' + url)
     cnt += 1
-    urlop = urllib.request.urlopen(url)
+    #添加超时，当一些网站上不了时则跳过
+    try:
+        urlop = urllib.request.urlopen(url,timeout=2)
+    except :
+        continue
     '''
         这个版本的正则表达式是'href="(.+?)"'
         这个正则表达式会把那些.ico或者.jpg的链接都爬下来. 这样read()了之后碰上decode(‘utf-8′)就要抛出异常.
